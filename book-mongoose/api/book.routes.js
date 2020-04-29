@@ -28,7 +28,7 @@ bookRouter.route('/books').get (function(req,res){
 });
 
 // route get book by id
-bookRouter.route('/books/:id').get (function(req,res){
+bookRouter.route('/books/:id?').get (function(req,res){
     let id = req.params.id;
     Book.findById(id, function(err, books){
         res.json(books);
@@ -36,7 +36,7 @@ bookRouter.route('/books/:id').get (function(req,res){
 });
 
 // route put book by id
-bookRouter.route('/books/:id').put (function(req,res){
+bookRouter.route('/books/:id?').put (function(req,res){
     Book.findById(req.params.id, function(err, books){
         if(!books){
             res.status(400).send("Data not found");
@@ -60,7 +60,7 @@ bookRouter.route('/books/:id').put (function(req,res){
     });
 });
 
-bookRouter.route('/books/:id').get(function(req,res){
+bookRouter.route('/books/:id?').get(function(req,res){
     Book.findByIdAndRemove({ id: req.params.id}, function(err, books){
         if(err) res.json(err);
         else res.json('Sucessfully Removed');
