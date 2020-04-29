@@ -18,10 +18,17 @@ module.exports = function(app){
     });
 
     // POST /books
+    // {
+    //     "_id": "001",
+    //     "title": "Book 28",
+    //     "author": "Ghani",
+    //     "published_date": ISODate("2010-09-24T00:00:00Z"),
+    //     "pages": "200",
+    //     "language": "Indonesia",
+    //     "publisher_id": "ghaninf"
+    // }
     app.post('/books', function(req,res,next){
         const { _id, title, author, published_date, pages, language, publisher_id } = req.body;
-        // console.log( req.body );
-        // console.log( _id, title, author, published_date, pages, language, publisher_id );
         model.Books.create({
             _id : _id,
             title: title,
@@ -37,43 +44,40 @@ module.exports = function(app){
                 message: "Data has been created"
             })    
         )
-    });
-
-    // GET /books/:id
-    app.get('/books/:id', function(res,req){
-        const book_id = req.params.id;
-        const { _id, title, author, published_date, pages, language, publisher_id } = req.body;
-        model.Books.findById({
-            _id : _id,
-            title: title,
-            author: author,
-            published_date: published_date,
-            pages: pages,
-            language: language,
-            publisher_id: publisher_id
-        },
-        {
-            where: {
-                id: book_id
-            }
-        }
-        )
-        .then(books =>
-            res.json({
-                error: false,
-                message: "Specify data has been selected"
-            })    
-        )
         .catch(error =>
             res.json({
                 error: true,
                 error: error
-            })    
+            })
+        )
+    });
+
+    // GET localhost:port/books/id
+    app.get("/books/:id?", (req, res) => {
+        const book_id = req.params.id;
+        console.log("ID : "+book_id);
+        model.Books.findOne(
+        {
+            where: {
+                id: book_id
+            }
+        })
+        .then( book =>
+            res.json({
+                error: false,
+                data: book
+            })
+        )
+        .catch( error =>
+            res.json({
+                error: true,
+                error: error
+            }) 
         )
     });
     
-    // PUT /books/:id
-    app.put('books/:id', function(req,res){
+    // PUT localhost:port/books/id
+    app.put("/books/:id?", function(req,res){
         const book_id = req.params.id;
         const { _id, title, author, published_date, pages, language, publisher_id } = req.body;
         model.Books.update({
@@ -105,25 +109,25 @@ module.exports = function(app){
         )
     });
 
-    // DELETE /books/:id
-    app.delete('books/:id', function(res,req,next){
-        const books_id = req.params.id;
+    // DELETE localhost:port/books/:id
+    app.delete("/books/:id?", (req, res) => {
+        const book_id = req.params.id;
         model.Books.destroy({
             where: {
-                id: books_id
+                id: book_id
             }
         })
-        .then(status =>
+        .then( book =>
             res.json({
                 error: false,
-                message: "Data has been delete"
+                message: `Book ID = ${book_id} has been deleted.`
             })
         )
-        .catch(error =>
+        .catch( error =>
             res.json({
                 error: true,
                 error: error
-            })
+            }) 
         )
     });
 };
