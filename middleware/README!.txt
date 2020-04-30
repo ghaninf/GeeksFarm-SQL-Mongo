@@ -1,3 +1,6 @@
+// Cek app/env.js 
+// Sesuaikan dengan DB yang tersedia
+
 // POST localhost:8080/api/auth/signup
 // Pilih Tab Body => raw | text = json
 {

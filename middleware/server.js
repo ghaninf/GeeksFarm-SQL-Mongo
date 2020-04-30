@@ -50,16 +50,3 @@ function initial(){
         name: "PM"
     });
 }
-
-// Sign Up
-// {
-// 	"name": "Ghani",
-// 	"username": "ghaninf",
-// 	"email": "ghaninf@gmail.com",
-// 	"password": "asdasd123",
-// 	"roles": ["user", "admin"]
-// }
-
-// Sign In
-// 	"username": "ghaninf1",
-// 	"password": "asdasd123"
